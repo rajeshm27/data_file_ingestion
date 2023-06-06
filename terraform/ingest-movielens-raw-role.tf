@@ -42,29 +42,23 @@ data "aws_iam_policy_document" "s3_policy" {
   }
 }
 
-resource "aws_iam_policy" "cloud_watch_policy" {
-  name   = "cloud_watch_policy"
-  policy = data.aws_iam_policy_document.cloud_watch_policy.json
-}
+data "aws_iam_policy_document" "sns_policy" {
+  statement {
+    effect = "Allow"
 
-resource "aws_iam_policy" "s3_policy" {
-  name   = "s3_policy"
-  policy = data.aws_iam_policy_document.s3_policy.json
+    actions = [
+      "sns:*"
+    ]
+
+    resources = [
+      "*"
+    ]
+  }
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
   name               = "iam_for_lambda"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
-}
-
-resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {
-  role       = aws_iam_role.iam_for_lambda.name
-  policy_arn = aws_iam_policy.s3_policy.arn
-}
-
-resource "aws_iam_role_policy_attachment" "cloudwatch_policy-attachment" {
-  role       = aws_iam_role.iam_for_lambda.name
-  policy_arn = aws_iam_policy.cloud_watch_policy.arn
 }
 
 resource "aws_iam_role_policy" "cloud_watch_policy"{
@@ -73,3 +67,18 @@ resource "aws_iam_role_policy" "cloud_watch_policy"{
     role=aws_iam_role.iam_for_lambda.name
 }
 
+resource "aws_iam_policy" "s3_policy" {
+  name   = "s3_policy"
+  policy = data.aws_iam_policy_document.s3_policy.json
+}
+
+resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {
+  role       = aws_iam_role.iam_for_lambda.name
+  policy_arn = aws_iam_policy.s3_policy.arn
+}
+
+resource "aws_iam_role_policy" "sns_policy_attachment" {
+  name   = "sns_policy_attachment"
+  policy = data.aws_iam_policy_document.sns_policy.json
+  role   = aws_iam_role.iam_for_lambda.name
+}

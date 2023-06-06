@@ -1,14 +1,14 @@
-resource "aws_s3_bucket" "rajesh-indv-movielens-source-dataset-tf-test" {
-  bucket = "rajesh-indv-movielens-source-dataset-tf-test"
+#resource "aws_s3_bucket" "rajesh-indv-movielens-source-dataset-tf-test" {
+  #bucket = "rajesh-indv-movielens-source-dataset-tf-test"
   
-  acl    = "private"
-}
+  #acl    = "private"
 
-resource "aws_s3_bucket" "rajesh-indv-movielens-raw-dataset-tf-test" {
-  bucket = "rajesh-indv-movielens-raw-dataset-tf-test"
+
+#resource "aws_s3_bucket" "rajesh-indv-movielens-raw-dataset-tf-test" {
+  #bucket = "rajesh-indv-movielens-raw-dataset-tf-test"
  
-  acl    = "private"
-}
+  #acl    = "private"
+
 
 
 resource "aws_cloudwatch_event_rule" "lambda_trigger" {
