@@ -38,7 +38,7 @@ def publish_sns_message(message, subject):
 
 def lambda_handler(event, context):
     try:
-        data_set = event.get("data_set")
+        data_set = event.get("dataset")
         log.info(f"{data_set} This is my key")
         response = s3_client.get_object(Bucket=code_bucket, Key=f"{data_set}/config/process_config.json")
         log.info("This step was successful")
