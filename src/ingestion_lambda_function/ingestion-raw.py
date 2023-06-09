@@ -12,6 +12,7 @@ day = current_date.day
 
 code_bucket = os.environ['codebucket']
 print(code_bucket)
+sns_envmt = os.environ['sns_topic_notifications']
 
 s3 = boto3.resource('s3')
 s3_client=boto3.client('s3')
@@ -28,7 +29,7 @@ log.setLevel(logging.INFO)
 def publish_sns_message(message, subject):
     try:
         response = sns_client.publish(
-            TopicArn='arn:aws:sns:us-east-2:867838412845:data-pipeline-notification',
+            TopicArn=sns_envmt,
             Message=message,
             Subject=subject,
         )
@@ -99,7 +100,7 @@ def lambda_handler(event, context):
         }
         
     response = sns_client.publish(
-        TopicArn='arn:aws:sns:us-east-2:867838412845:data-pipeline-notification',
+        TopicArn=sns_envmt,
         Message='Successfully Ingested Raw Data',
         Subject='Ingest Raw Data',)
         

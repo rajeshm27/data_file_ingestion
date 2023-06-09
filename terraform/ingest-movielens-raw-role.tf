@@ -77,8 +77,37 @@ resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {
   policy_arn = aws_iam_policy.s3_policy.arn
 }
 
+resource "aws_sns_topic" "creating_topic" {
+  name = "rajesh-data-ingestion-pipeline"
+}
+
 resource "aws_iam_role_policy" "sns_policy_attachment" {
   name   = "sns_policy_attachment"
   policy = data.aws_iam_policy_document.sns_policy.json
   role   = aws_iam_role.iam_for_lambda.name
 }
+
+resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
+  topic_arn = aws_sns_topic.creating_topic.arn
+  protocol  = "email-json"
+  endpoint  = "rcmutyala@gmail.com"
+}
+
+# resource "aws_sfn_state_machine" "sfn_state_machine" {
+#   name     = "ingest-movielens-raw"
+#   role_arn = aws_iam_role.iam_for_sfn.arn
+
+#   definition = <<EOF
+# {
+#   "Comment": "A Hello World example of the Amazon States Language using an AWS Lambda Function",
+#   "StartAt": "HelloWorld",
+#   "States": {
+#     "HelloWorld": {
+#       "Type": "Task",
+#       "Resource": "${aws_lambda_function.lambda.arn}",
+#       "End": true
+#     }
+#   }
+# }
+# EOF
+# }

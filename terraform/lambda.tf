@@ -2,6 +2,8 @@ data "archive_file" "lambda" {
   type        = "zip"
   source_file = "/Users/rajeshmutyala/Documents/Projects/data_ingestion_project/src/ingestion_lambda_function/ingestion-raw.py"
   output_path = "/Users/rajeshmutyala/Documents/Projects/data_ingestion_project/src/ingestion_lambda_function/ingestion-raw.zip"
+
+# depends_on = [ local_file.ingestion-raw]
 } 
 
 resource "aws_lambda_function" "lambda-src-raw" {
@@ -22,6 +24,24 @@ resource "aws_lambda_function" "lambda-src-raw" {
   environment {
     variables = {
       codebucket = "code-bucket-rajesh"
+      sns_topic_notifications = aws_sns_topic.creating_topic.arn
     }
   }
 }
+
+# data "template_file" "config_template" {
+#   template = file("${path.module}/../src/ingestion_lambda_function/ingestion-raw.py.template")
+#   vars = {
+#     region = var.aws_region
+#     account_id = var.account_id
+#   }
+# }
+
+# output "rendered_config" {
+#   value = data.template_file.config_template.rendered
+# }
+
+# resource "local_file" "ingestion-raw" {
+#   content  = data.template_file.config_template.rendered
+#   filename = "${path.module}/../src/ingestion_lambda_function/ingestion-raw.py.template"
+# }
