@@ -1,0 +1,57 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] aws_cloudwatch_event_rule.lambda_trigger (expand)" [label = "aws_cloudwatch_event_rule.lambda_trigger", shape = "box"]
+		"[root] aws_cloudwatch_event_target.lambda_target (expand)" [label = "aws_cloudwatch_event_target.lambda_target", shape = "box"]
+		"[root] aws_iam_policy.s3_policy (expand)" [label = "aws_iam_policy.s3_policy", shape = "box"]
+		"[root] aws_iam_role.iam_for_lambda (expand)" [label = "aws_iam_role.iam_for_lambda", shape = "box"]
+		"[root] aws_iam_role_policy.cloud_watch_policy (expand)" [label = "aws_iam_role_policy.cloud_watch_policy", shape = "box"]
+		"[root] aws_iam_role_policy.sns_policy_attachment (expand)" [label = "aws_iam_role_policy.sns_policy_attachment", shape = "box"]
+		"[root] aws_iam_role_policy_attachment.s3_access_policy_attachment (expand)" [label = "aws_iam_role_policy_attachment.s3_access_policy_attachment", shape = "box"]
+		"[root] aws_lambda_function.lambda-src-raw (expand)" [label = "aws_lambda_function.lambda-src-raw", shape = "box"]
+		"[root] aws_sns_topic.creating_topic (expand)" [label = "aws_sns_topic.creating_topic", shape = "box"]
+		"[root] aws_sns_topic_subscription.user_updates_sqs_target (expand)" [label = "aws_sns_topic_subscription.user_updates_sqs_target", shape = "box"]
+		"[root] data.archive_file.lambda (expand)" [label = "data.archive_file.lambda", shape = "box"]
+		"[root] data.aws_iam_policy_document.assume_role (expand)" [label = "data.aws_iam_policy_document.assume_role", shape = "box"]
+		"[root] data.aws_iam_policy_document.cloud_watch_policy (expand)" [label = "data.aws_iam_policy_document.cloud_watch_policy", shape = "box"]
+		"[root] data.aws_iam_policy_document.s3_policy (expand)" [label = "data.aws_iam_policy_document.s3_policy", shape = "box"]
+		"[root] data.aws_iam_policy_document.sns_policy (expand)" [label = "data.aws_iam_policy_document.sns_policy", shape = "box"]
+		"[root] provider[\"registry.terraform.io/hashicorp/archive\"]" [label = "provider[\"registry.terraform.io/hashicorp/archive\"]", shape = "diamond"]
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"]" [label = "provider[\"registry.terraform.io/hashicorp/aws\"]", shape = "diamond"]
+		"[root] var.account_id" [label = "var.account_id", shape = "note"]
+		"[root] var.aws_region" [label = "var.aws_region", shape = "note"]
+		"[root] aws_cloudwatch_event_rule.lambda_trigger (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_cloudwatch_event_target.lambda_target (expand)" -> "[root] aws_cloudwatch_event_rule.lambda_trigger (expand)"
+		"[root] aws_cloudwatch_event_target.lambda_target (expand)" -> "[root] aws_lambda_function.lambda-src-raw (expand)"
+		"[root] aws_iam_policy.s3_policy (expand)" -> "[root] data.aws_iam_policy_document.s3_policy (expand)"
+		"[root] aws_iam_role.iam_for_lambda (expand)" -> "[root] data.aws_iam_policy_document.assume_role (expand)"
+		"[root] aws_iam_role_policy.cloud_watch_policy (expand)" -> "[root] aws_iam_role.iam_for_lambda (expand)"
+		"[root] aws_iam_role_policy.cloud_watch_policy (expand)" -> "[root] data.aws_iam_policy_document.cloud_watch_policy (expand)"
+		"[root] aws_iam_role_policy.sns_policy_attachment (expand)" -> "[root] aws_iam_role.iam_for_lambda (expand)"
+		"[root] aws_iam_role_policy.sns_policy_attachment (expand)" -> "[root] data.aws_iam_policy_document.sns_policy (expand)"
+		"[root] aws_iam_role_policy_attachment.s3_access_policy_attachment (expand)" -> "[root] aws_iam_policy.s3_policy (expand)"
+		"[root] aws_iam_role_policy_attachment.s3_access_policy_attachment (expand)" -> "[root] aws_iam_role.iam_for_lambda (expand)"
+		"[root] aws_lambda_function.lambda-src-raw (expand)" -> "[root] aws_iam_role.iam_for_lambda (expand)"
+		"[root] aws_lambda_function.lambda-src-raw (expand)" -> "[root] aws_sns_topic.creating_topic (expand)"
+		"[root] aws_lambda_function.lambda-src-raw (expand)" -> "[root] data.archive_file.lambda (expand)"
+		"[root] aws_sns_topic.creating_topic (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_sns_topic_subscription.user_updates_sqs_target (expand)" -> "[root] aws_sns_topic.creating_topic (expand)"
+		"[root] data.archive_file.lambda (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/archive\"]"
+		"[root] data.aws_iam_policy_document.assume_role (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] data.aws_iam_policy_document.cloud_watch_policy (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] data.aws_iam_policy_document.s3_policy (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] data.aws_iam_policy_document.sns_policy (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] provider[\"registry.terraform.io/hashicorp/archive\"] (close)" -> "[root] data.archive_file.lambda (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_cloudwatch_event_target.lambda_target (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_iam_role_policy.cloud_watch_policy (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_iam_role_policy.sns_policy_attachment (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_iam_role_policy_attachment.s3_access_policy_attachment (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_sns_topic_subscription.user_updates_sqs_target (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"]" -> "[root] var.aws_region"
+		"[root] root" -> "[root] provider[\"registry.terraform.io/hashicorp/archive\"] (close)"
+		"[root] root" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)"
+		"[root] root" -> "[root] var.account_id"
+	}
+}
+
