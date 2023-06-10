@@ -5,6 +5,7 @@ The goal of this project was to develop infrastracurre code which, when launched
 "raw" S3 bucket while keeping track of the transfer date. This operation is a part of a larger picutre, whivh involves moving the data from the "raw" bucket to
 the staging environment, and ultimateley to the "data lake." In practice, this process is organizing and properly structuring data for analysis. 
 
+[Process Flow](rajesh_data_ingestion_project.png)
 
 Steps Taken & File Structure Details:
 
