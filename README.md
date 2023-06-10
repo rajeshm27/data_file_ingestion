@@ -18,6 +18,38 @@ Steps Taken & File Structure Details:
    we have the "config" & "ingestion_lambda_function" subfolders. The "config" folder holds the "config.json file", while the "ingestion_lambda_function"
    contains the "ingestion-raw.py" file. As described later, the "config.json file" will be called upon in the "ingestion-raw.py" file. 
    
+   The "ingestion-raw.py" defines the lambda function:
+   
+   -The necessary imports are made, including the datetime module for date and time manipulation, boto3 for AWS service interactions, json for working with JSON data, os for accessing environment variables, and logging for logging messages.
+   
+   -The current date is obtained using datetime.now() and the year, month, and day values are extracted.
+   
+   -The script retrieves the values of two environment variables: code_bucket and sns_topic_notifications. The code_bucket value is printed.
+   
+   -The s3, s3_client, and sns_client objects are created using the boto3 library to interact with AWS S3 and SNS services.
+   
+   -Logging configurations are set up, specifying the log level and format.
+   
+   -The publish_sns_message function is defined, which publishes a message to an SNS topic using the sns_client.publish method.
+   
+   -The lambda_handler function is defined, which is the entry point for the Lambda function. It takes in an event and context parameter.
+   
+   -Within the lambda_handler function, several operations are performed. First, the data_set value is extracted from the event parameter and logged.
+   
+   -An attempt is made to retrieve an object from the S3 bucket specified by code_bucket and the data_set value. If successful, the data is read and processed further.
+   
+   -Next, the configuration data is extracted from the retrieved object, including the source and target S3 bucket names.
+   
+   -A list of objects in the source S3 bucket is obtained using the list_objects_v2 method, and file names are extracted from the response.
+   
+   -A loop iterates through the file list, performing operations on each file. A copy of each file is made in the target S3 bucket with a modified key, incorporating the current date and file extension.
+   
+   -After the file processing loop, a success message is published to the SNS topic.
+   
+   -Finally, a response is returned from the Lambda function, indicating success or failure with an appropriate status code and message.
+   
+   ----
+   
    The remaining steps will desribe our infrastructure code as established by the files within the "terraform" folder:
    
  4. ingest-movielens-raw-role.tf: This code Creates IAM resources in AWS. It sets up an IAM role named "iam_for_lambda" with associated policies 
