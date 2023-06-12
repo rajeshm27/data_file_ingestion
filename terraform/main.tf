@@ -30,3 +30,8 @@ resource "aws_cloudwatch_event_target" "lambda_target" {
   target_id = aws_sfn_state_machine.sfn_state_machine.name
   input = "{\"dataset\":\"movielens\"}"
 }
+
+# resource "aws_lambda_invocation" "lambda_invocation" {
+#   function_name = "ingest-movielens-raw"
+#   input         = "{\"dataset\":\"movielens\"}"
+# }
