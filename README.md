@@ -55,10 +55,7 @@ Steps Taken & File Structure Details:
    
    The remaining steps will desribe our infrastructure code as established by the files within the "terraform" folder:
    
- 4. ingest-movielens-raw-role.tf: This code Creates IAM resources in AWS. It sets up an IAM role named "iam_for_lambda" with associated policies 
-    for CloudWatch Logs, S3, and SNS. The IAM role is granted permission to assume the role by the Lambda service, perform CloudWatch Logs actions, 
-    have full access to S3 and S3 Object Lambda, and perform actions on SNS. Additionally, it creates an SNS topic and sets up a subscription for 
-    email notifications. 
+ 4. ingest-movielens-raw-role.tf: The code defines a data source for an IAM policy document that allows an AWS Lambda function to assume a role. It also creates an IAM role named "state_machine_role" with an assume role policy that allows the AWS Step Functions service to assume the role. Another data source is defined for an IAM policy document that grants permissions related to CloudWatch Logs, S3, and SNS. The code then creates an IAM role named "iam_for_lambda" with the assume role policy obtained from the data source. It attaches a CloudWatch policy to this role and creates an S3 policy as well. The S3 policy is attached to the "iam_for_lambda" role. Additional policies, such as "lambda-execution" and "sns_policy_attachment", are attached to the respective roles. The code also creates an SNS topic and a subscription to receive updates. Lastly, it creates an AWS Step Functions state machine named "sfn_state_machine" with a specific definition that includes invoking a Lambda function.
     
  5. lambda.tf: This code creates an AWS Lambda function. The code first creates a zip archive file using the data.archive_file block, which 
     specifies the source file and output path for the zip file. The aws_lambda_function resource then uses this zip file as its source code, 
