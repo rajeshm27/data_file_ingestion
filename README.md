@@ -7,7 +7,7 @@ the staging environment, and ultimateley to the "data lake." In practice, this p
 
 [Process Flow](rajesh_data_ingestion_project.png)
 
-![Process Flow Diagram](/Users/rajeshmutyala/Documents/Projects/data_ingestion_project/rajesh_data_ingestion_project.png)
+![Process Flow Diagram](data_file_ingestion/rajesh_data_ingestion_project.png)
 
 Steps Taken & File Structure Details:
 
