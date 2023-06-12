@@ -7,6 +7,8 @@ the staging environment, and ultimateley to the "data lake." In practice, this p
 
 [Process Flow](rajesh_data_ingestion_project.png)
 
+![rajesh_data_ingestion_project](data_ingestion_project/rajesh_data_ingestion_project.png)
+
 Steps Taken & File Structure Details:
 
 1. Created the following S3 buckets in the AWS console: "rajesh-movielens-bucket" , "raw-rajesh-movielens-bucket" , & "code-bucket-rajesh"
