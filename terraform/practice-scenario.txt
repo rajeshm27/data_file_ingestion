@@ -1,0 +1,53 @@
+Kinesis data firehose is reading data from kinesis data streams and writing transformed data to s3 
+When completed, It will create event in cloud watch 
+When there is a event match, a lambda will trigger and invoke a glue job.
+
+
+Resources:
+-Kinesis data firehose
+-Kinesis data streams
+-S3 
+-CloudWatch Event 
+-Lambda
+-Glue Job 
+
+Resource communication:
+-Kinesis data firehose is communicating with Kinesis data streams
+-Kinesis data firehose is communicating with Kinesis data firehose
+-Kinesis data firehose is communicating with S3
+-Kinesis data firehose is communicating with CloudWatch
+-CloudWatch is communicating with Lambda
+
+iam roles:
+-Kinesis Data Firehose IAM Role
+-Kinesis data streams IAM Role
+-S3 IAM role
+-CloudWatch Event IAM Role
+-Lambda IAM Role
+-Glue IAM Role
+
+-role a
+-role b
+-role c
+-role d 
+
+iam policies:
+-Kinesis Data Firehose IAM Policy
+-Kinesis data streams IAM Policy 
+-S3 IAM policy 
+-CloudWatch Event IAM Policy
+-Lambda IAM Policy
+-Glue IAM Policy
+
+iam policies and its roles:
+-Associate the Kinesis Data Firehose IAM policy with the Kinesis Data Firehose IAM role
+-Associate the S3 IAM role with S3 IAM policy
+-Associate the CloudWatch Event IAM policy with the CloudWatch Event IAM role
+-Associate the Lambda IAM policy with the Lambda IAM role
+-Associate the Glue IAM policy with the Glue IAM role
+
+resource with roles:
+-Kinesis data firehose resource = Kinesis Data Firehose IAM Role + Kinesis data streams IAM Role + S3 IAM role + -CloudWatch Event IAM Role
+-Kinesis data streams resouce = Kinesis Data Firehose IAM Role
+-CloudWatch Event resource = Lambda IAM Role
+-Lambda resource = Glue IAM Role
