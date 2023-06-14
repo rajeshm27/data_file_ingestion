@@ -11,24 +11,6 @@ data "aws_iam_policy_document" "assume_role" {
   }
 }
 
-# resource "aws_iam_role" "state_machine_role" {
-#   name               = "state_machine_role"
-#   assume_role_policy = <<EOF
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Effect": "Allow",
-#       "Principal": {
-#         "Service": "states.amazonaws.com"
-#       },
-#       "Action": "sts:AssumeRole"
-#     }
-#   ]
-# }
-# EOF
-# }
-
 data "aws_iam_policy_document" "cloud_watch_policy" {
   statement {
     effect = "Allow"
@@ -96,27 +78,6 @@ resource "aws_iam_role_policy_attachment" "s3_access_policy_attachment" {
   policy_arn = aws_iam_policy.s3_policy.arn
 }
 
-# resource "aws_iam_role_policy" "lambda-execution" {
-#   name = "lambda-execution"
-#   role = aws_iam_role.state_machine_role.id
-
-#   policy = <<EOF
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Action": [
-#         "lambda:InvokeFunction",
-#         "states:StartExecution"
-#       ],
-#       "Effect": "Allow",
-#       "Resource": "*"
-#     }
-#   ]
-# }
-# EOF
-# }
-
 resource "aws_iam_role_policy" "sns_policy_attachment" {
   name   = "sns_policy_attachment"
   policy = data.aws_iam_policy_document.sns_policy.json
@@ -131,43 +92,6 @@ resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
   protocol  = "email-json"
   endpoint  = "rcmutyala@gmail.com"
 }
-
-# resource "aws_sfn_state_machine" "sfn_state_machine" {
-#   name     = "ingest-movielens-raw"
-#   role_arn = aws_iam_role.state_machine_role.arn
-
-#     definition = <<EOF
-# {
-#   "Comment": "A description of my state machine",
-#   "StartAt": "Lambda Invoke",
-#   "States": {
-#     "Lambda Invoke": {
-#       "Type": "Task",
-#       "Resource": "arn:aws:states:::lambda:invoke",
-#       "OutputPath": "$.Payload",
-#       "Parameters": {
-#         "Payload.$": "$",
-#         "FunctionName": "arn:aws:lambda:us-east-2:867838412845:function:ingest-movielens-raw:$LATEST"
-#       },
-#       "Retry": [
-#         {
-#           "ErrorEquals": [
-#             "Lambda.ServiceException",
-#             "Lambda.AWSLambdaException",
-#             "Lambda.SdkClientException",
-#             "Lambda.TooManyRequestsException"
-#           ],
-#           "IntervalSeconds": 2,
-#           "MaxAttempts": 6,
-#           "BackoffRate": 2
-#         }
-#       ],
-#       "End": true
-#     }
-#   }
-# }
-# EOF
-# }
 
 
 
