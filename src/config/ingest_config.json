@@ -1,0 +1,90 @@
+{
+    "source_system": "movielens",
+    "type": "file_ingestion",
+    "schedule": "cron(0 20 * * ? *)",
+    "source_bucket": "rajesh-movielens-bucket",
+    "source_folder": "movielens",
+    "target_bucket": "raw-rajesh-movielens-bucket",
+    "pipeline": [
+        {
+            "data_asset": "genome_scores",
+            "raw": {
+                "source_bucket": "rajesh-movielens-bucket",
+                "source_folder": "movielens",
+                "target_bucket": "raw-rajesh-movielens-bucket",
+                "partition": "DAY",
+                "file_pattern": "genome_scores",
+                "file_type": "csv"
+            },
+            "staging": {},
+            "publish": {}
+        },
+        {
+            "data_asset": "genome_tags",
+            "raw": {
+                "source_bucket": "rajesh-movielens-bucket",
+                "source_folder": "movielens",
+                "target_bucket": "raw-rajesh-movielens-bucket",
+                "partition": "YEAR",
+                "file_pattern": "genome_tags",
+                "file_type": "csv"
+
+            },
+            "staging": {},
+            "publish": {}
+        },
+        {
+            "data_asset": "movie_links",
+            "raw": {
+                "source_bucket": "rajesh-movielens-bucket",
+                "source_folder": "movielens",
+                "target_bucket": "raw-rajesh-movielens-bucket",
+                "partition": "DAY",
+                "file_pattern": "links",
+                "file_type": "csv"
+            },
+            "staging": {},
+            "publish": {}
+        },
+        {
+            "data_asset": "movies",
+            "raw": {
+                "source_bucket": "rajesh-movielens-bucket",
+                "source_folder": "movielens",
+                "target_bucket": "raw-rajesh-movielens-bucket",
+                "partition": "MONTH",
+                "file_pattern": "movie",
+                "file_type": "csv"
+            },
+            "staging": {},
+            "publish": {}
+        },
+        {
+            "data_asset": "movie_rating",
+            "raw": {
+                "source_bucket": "rajesh-movielens-bucket",
+                "source_folder": "movielens",
+                "target_bucket": "raw-rajesh-movielens-bucket",
+                "partition": "MONTH",
+                "file_pattern": "rating",
+                "file_type": "csv"
+            },
+            "staging": {},
+            "publish": {}
+        },
+        {
+            "data_asset": "movie_tags",
+            "raw": {
+                "source_bucket": "rajesh-movielens-bucket",
+                "source_folder": "movielens",
+                "target_bucket": "raw-rajesh-movielens-bucket",
+                "partition": "MONTH",
+                "file_pattern": "tags",
+                "file_type": "csv"
+            },
+            "staging": {},
+            "publish": {}
+        }
+        
+    ]
+}

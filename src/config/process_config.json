@@ -1,0 +1,5 @@
+{
+    "source_bucket": "rajesh-movielens-bucket",
+    "source_folder": "movielens",
+    "target_bucket": "raw-rajesh-movielens-bucket"
+}
