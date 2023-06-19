@@ -66,12 +66,12 @@ resource "aws_s3_object" "upload_objects" {
   for_each = local.config_files
 
   bucket = aws_s3_bucket.rajesh-source-tf.id
-  key    = "/Users/rajesh/Documents/Projects/data_file_ingestion/movielens_dataset/${each.value}"
+  key    = "/movielens_dataset/${each.value}"
   source = "/Users/rajesh/Documents/Projects/data_file_ingestion/movielens_dataset/${each.value}"
 
   etag = filemd5("/Users/rajesh/Documents/Projects/data_file_ingestion/movielens_dataset/${each.value}")
 }
 
 locals {
-config_files = fileset("/Users/rajesh/Documents/Projects/data_file_ingestion/movielens_dataset/", "*/.csv")
+config_files = fileset("/Users/rajesh/Documents/Projects/data_file_ingestion/movielens_dataset/", "**/*.csv")
 }
