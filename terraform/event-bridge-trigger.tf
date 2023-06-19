@@ -15,7 +15,7 @@ resource "aws_cloudwatch_event_rule" "lambda_trigger" {
   name        = "nightly_lambda_trigger"
   description = "Trigger Lambda function every night at 8 PM"
 
-  schedule_expression = "cron(12 00 * * ? *)"  # Cron expression for 8 PM every day
+  schedule_expression = "cron(05 20 * * ? *)"  # Cron expression for 8 PM every day
 
   # Optionally, you can add tags to the EventBridge rule
   tags = {

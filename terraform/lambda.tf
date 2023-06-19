@@ -1,7 +1,7 @@
 data "archive_file" "lambda" {
   type        = "zip"
-  source_file = "/Users/rajeshmutyala/Documents/Projects/data_ingestion_project/src/ingestion_lambda_function/ingestion-raw.py"
-  output_path = "/Users/rajeshmutyala/Documents/Projects/data_ingestion_project/src/ingestion_lambda_function/ingestion-raw.zip"
+  source_file = "/Users/rajesh/Documents/Projects/data_file_ingestion/src/ingestion_lambda_function/ingestion-raw.py"
+  output_path = "/Users/rajesh/Documents/Projects/data_file_ingestion/src/ingestion_lambda_function/ingestion-raw.zip"
 
 # depends_on = [ local_file.ingestion-raw]
 } 

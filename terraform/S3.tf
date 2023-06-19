@@ -58,20 +58,20 @@ resource "aws_s3_object" "object" {
   bucket = aws_s3_bucket.rajesh-code-tf.id
   key    = "movielens/config/config.json"
   acl    = "private"
-  source = "/Users/rajeshmutyala/Documents/Projects/data_ingestion_project/src/config/config.json"
-  etag   = filemd5("/Users/rajeshmutyala/Documents/Projects/data_ingestion_project/src/config/config.json")
+  source = "/Users/rajesh/Documents/Projects/data_file_ingestion/src/config/config.json"
+  etag   = filemd5("/Users/rajesh/Documents/Projects/data_file_ingestion/src/config/config.json")
 }
 
 resource "aws_s3_object" "upload_objects" {
   for_each = local.config_files
 
   bucket = aws_s3_bucket.rajesh-source-tf.id
-  key    = "/Users/rajeshmutyala/Documents/Projects/data_ingestion_project/movielens_dataset/${each.value}"
-  source = "/Users/rajeshmutyala/Documents/Projects/data_ingestion_project/movielens_dataset/${each.value}"
+  key    = "/Users/rajesh/Documents/Projects/data_file_ingestion/movielens_dataset/${each.value}"
+  source = "/Users/rajesh/Documents/Projects/data_file_ingestion/movielens_dataset/${each.value}"
 
-  etag = filemd5("/Users/rajeshmutyala/Documents/Projects/data_ingestion_project/movielens_dataset/${each.value}")
+  etag = filemd5("/Users/rajesh/Documents/Projects/data_file_ingestion/movielens_dataset/${each.value}")
 }
 
 locals {
-config_files = fileset("/Users/rajeshmutyala/Documents/Projects/data_ingestion_projectmovielens_dataset/", "*/.csv")
+config_files = fileset("/Users/rajesh/Documents/Projects/data_file_ingestion/movielens_dataset/", "*/.csv")
 }
