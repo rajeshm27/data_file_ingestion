@@ -14,9 +14,9 @@ terraform {
 
 terraform {
     backend "s3" {
-        bucket = "code-bucket-rajesh"
-        dynamodb_table = "terraform_state_lock"
+        bucket = "rajesh-code-tf"
+        dynamodb_table = "tf_state_lock"
         key = "secure-tf/terraform_state/tf_state.json"
-        region = "us-east-1"
+        region = "us-east-2"
     }
 }

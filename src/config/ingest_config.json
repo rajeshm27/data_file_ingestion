@@ -4,15 +4,15 @@
     "schedule": "cron(0 20 * * ? *)",
     "source_bucket": "rajesh-movielens-bucket",
     "source_folder": "movielens",
-    "target_bucket": "raw-rajesh-movielens-bucket",
+    "target_bucket": "rajesh-raw-tf",
     "pipeline": [
         {
             "data_asset": "genome_scores",
             "raw": {
-                "source_bucket": "rajesh-movielens-bucket",
+                "source_bucket": "rajesh-source-tf",
                 "source_folder": "movielens",
-                "target_bucket": "raw-rajesh-movielens-bucket",
-                "partition": "DAY",
+                "target_bucket": "rajesh-raw-tf",
+                "partition": "MONTH",
                 "file_pattern": "genome_scores",
                 "file_type": "csv"
             },
@@ -22,9 +22,9 @@
         {
             "data_asset": "genome_tags",
             "raw": {
-                "source_bucket": "rajesh-movielens-bucket",
+                "source_bucket": "rajesh-source-tf",
                 "source_folder": "movielens",
-                "target_bucket": "raw-rajesh-movielens-bucket",
+                "target_bucket": "rajesh-raw-tf",
                 "partition": "YEAR",
                 "file_pattern": "genome_tags",
                 "file_type": "csv"
@@ -36,9 +36,9 @@
         {
             "data_asset": "movie_links",
             "raw": {
-                "source_bucket": "rajesh-movielens-bucket",
+                "source_bucket": "rajesh-source-tf",
                 "source_folder": "movielens",
-                "target_bucket": "raw-rajesh-movielens-bucket",
+                "target_bucket": "rajesh-raw-tf",
                 "partition": "DAY",
                 "file_pattern": "links",
                 "file_type": "csv"
@@ -49,9 +49,9 @@
         {
             "data_asset": "movies",
             "raw": {
-                "source_bucket": "rajesh-movielens-bucket",
+                "source_bucket": "rajesh-source-tf",
                 "source_folder": "movielens",
-                "target_bucket": "raw-rajesh-movielens-bucket",
+                "target_bucket": "rajesh-raw-tf",
                 "partition": "MONTH",
                 "file_pattern": "movie",
                 "file_type": "csv"
@@ -62,9 +62,9 @@
         {
             "data_asset": "movie_rating",
             "raw": {
-                "source_bucket": "rajesh-movielens-bucket",
+                "source_bucket": "rajesh-source-tf",
                 "source_folder": "movielens",
-                "target_bucket": "raw-rajesh-movielens-bucket",
+                "target_bucket": "rajesh-raw-tf",
                 "partition": "MONTH",
                 "file_pattern": "rating",
                 "file_type": "csv"
@@ -75,9 +75,9 @@
         {
             "data_asset": "movie_tags",
             "raw": {
-                "source_bucket": "rajesh-movielens-bucket",
+                "source_bucket": "rajesh-source-tf",
                 "source_folder": "movielens",
-                "target_bucket": "raw-rajesh-movielens-bucket",
+                "target_bucket": "rajesh-raw-tf",
                 "partition": "MONTH",
                 "file_pattern": "tags",
                 "file_type": "csv"

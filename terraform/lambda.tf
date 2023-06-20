@@ -23,7 +23,7 @@ resource "aws_lambda_function" "lambda-src-raw" {
 
   environment {
     variables = {
-      codebucket = "code-bucket-rajesh"
+      codebucket = "rajesh-code-tf"
       sns_topic_notifications = aws_sns_topic.creating_topic.arn
     }
   }

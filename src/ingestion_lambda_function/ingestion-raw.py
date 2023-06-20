@@ -41,7 +41,7 @@ def lambda_handler(event, context):
     try:
         data_set = event.get("dataset")
         log.info(f"{data_set} This is my key")
-        response = s3_client.get_object(Bucket=code_bucket, Key=f"{data_set}/config/process_config.json")
+        response = s3_client.get_object(Bucket=code_bucket, Key=f"{data_set}/config/ingest_config.json")
         log.info("This step was successful")
     except Exception as e:
         log.exception(f"error occured {e}")

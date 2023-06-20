@@ -55,11 +55,11 @@ resource "aws_s3_bucket" "rajesh-code-tf" {
 }
 
 resource "aws_s3_object" "object" {
-  bucket = aws_s3_bucket.rajesh-code-tf.id
-  key    = "movielens/config/config.json"
+  bucket = "rajesh-code-tf"
+  key    = "movielens/config/ingest_config.json"
   acl    = "private"
-  source = "/Users/rajesh/Documents/Projects/data_file_ingestion/src/config/config.json"
-  etag   = filemd5("/Users/rajesh/Documents/Projects/data_file_ingestion/src/config/config.json")
+  source = "/Users/rajesh/Documents/Projects/data_file_ingestion/src/config/ingest_config.json"
+  etag   = filemd5("/Users/rajesh/Documents/Projects/data_file_ingestion/src/config/ingest_config.json")
 }
 
 resource "aws_s3_object" "upload_objects" {
