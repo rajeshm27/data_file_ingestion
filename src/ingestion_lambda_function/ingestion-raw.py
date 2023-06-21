@@ -76,26 +76,52 @@ def lambda_handler(event, context):
             file_name = obj['Key']
             file_name = file_name.replace(source_folder + '/', '')
             file_list.append(file_name)
-        log.info(file_list[1:])
-
-        for i in file_list[1:]:
-            file_part = i.split('.')[0]
-            file_extension = i.split('.')[1]
-            log.info(file_part)
-            if partition == year:
-                otherkey = f"{source_folder}/{file_part}/year={year}/{file_part}_{current_date}.{file_extension}"
-            elif partition == month:
-                otherkey = f"{source_folder}/{file_part}/year={year}/month={month}/{file_part}_{current_date}.{file_extension}"
-            elif partition == day:
-                otherkey = f"{source_folder}/{file_part}/year={year}/month={month}/day={day}/{file_part}_{current_date}.{file_extension}"
+        
+        pipeline_test = config_json['pipeline']
+        
+        data_asset_list = []
+        raw_partition_list = []
+        file_pattern_list = []
+        file_type_list = []
+        
+        for pipeline_obj in pipeline_test:
+            data_asset = pipeline_obj['data_asset']
+            data_asset_list.append(data_asset)
+            raw_partition = pipeline_obj['raw']['partition']
+            raw_partition_list.append(raw_partition)
+            file_pattern = pipeline_obj['raw']['file_pattern']
+            file_pattern_list.append(file_pattern)
+            file_type = pipeline_obj['raw']['file_type']
+            file_type_list.append(file_type)
             
-            log.info(otherkey)
-            copy_source = {
-                'Bucket': source_bucket,
-                'Key': f"{source_folder}/{i}"
-            }
-            bucket = s3.Bucket(target_bucket)
-            bucket.copy(copy_source, otherkey)
+            log.info(f"Data Asset: {data_asset_list}")
+            log.info(f"Raw Partition: {raw_partition_list}")
+            log.info(f"File Pattern: {file_pattern_list}")
+            log.info(f"File Type: {file_type_list}")
+            
+            
+        for file_name in file_list:
+            log.info(file_name)
+            for i, file_pattern in enumerate(file_pattern_list):
+                if file_name.find(file_pattern) != -1:
+           
+                    otherkey = f"{source_folder}/{file_pattern}/{file_pattern}_{current_date}.{file_type_list[i]}"
+                    if raw_partition_list[i].upper() == "YEAR":
+                        otherkey = f"{source_folder}/{file_pattern}/year={year}/{file_pattern}_{current_date}.{file_type_list[i]}"
+                    elif raw_partition_list[i].upper() == "MONTH":
+                        otherkey = f"{source_folder}/{file_pattern}/year={year}/month={month}/{file_pattern}_{current_date}.{file_type_list[i]}"
+                    elif raw_partition_list[i].upper() == "DAY":
+                        otherkey = f"{source_folder}/{file_pattern}/year={year}/month={month}/day={day}/{file_pattern}_{current_date}.{file_type_list[i]}"
+                    
+                    log.info(otherkey)
+                    
+                    copy_source = {
+                        'Bucket': source_bucket,
+                        'Key': f"{source_folder}/{file_name}" 
+                    }
+                    log.info (copy_source)
+                    bucket = s3.Bucket(target_bucket)
+                    bucket.copy(copy_source, otherkey)
 
     except Exception as e:
         log.exception(f"Error occurred during file processing: {e}")
