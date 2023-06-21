@@ -82,7 +82,13 @@ def lambda_handler(event, context):
             file_part = i.split('.')[0]
             file_extension = i.split('.')[1]
             log.info(file_part)
-            otherkey = f"{source_folder}/{file_part}/year={year}/month={month}/day={day}/{file_part}_{current_date}.{file_extension}"
+            if partition == year:
+                otherkey = f"{source_folder}/{file_part}/year={year}/{file_part}_{current_date}.{file_extension}"
+            elif partition == month:
+                otherkey = f"{source_folder}/{file_part}/year={year}/month={month}/{file_part}_{current_date}.{file_extension}"
+            elif partition == day:
+                otherkey = f"{source_folder}/{file_part}/year={year}/month={month}/day={day}/{file_part}_{current_date}.{file_extension}"
+            
             log.info(otherkey)
             copy_source = {
                 'Bucket': source_bucket,
