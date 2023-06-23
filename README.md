@@ -35,5 +35,5 @@ The Terraform code creates AWS S3 resources including three buckets: "rajesh-sou
 providers.tf:
 This Terraform code configures the AWS provider with the specified region from the variable "aws_region". It sets the required Terraform version to be at least 0.14 and defines a required provider "random" with a minimum version of 3.0.1.
 
-variables.tf
+variables.tf:
 The Terraform code defines two variables. The first variable, "aws_region," represents the desired AWS region and is set to the default value of "us-east-2." The second variable, "account_id," represents the AWS account ID and is set to the value "867838412845" by default. These variables provide flexibility and customization options when deploying infrastructure resources using Terraform.
