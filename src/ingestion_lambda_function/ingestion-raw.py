@@ -4,6 +4,9 @@ import json
 import os
 import logging
 
+from aws_lambda_powertools import Logger
+
+log = Logger(service="Ingestion_Data")
 
 current_date = datetime.now() 
 year = current_date.year
@@ -17,14 +20,25 @@ sns_envmt = os.environ['sns_topic_notifications']
 s3 = boto3.resource('s3')
 s3_client=boto3.client('s3')
 sns_client = boto3.client('sns')
+dynamodb_client = boto3.client('dynamodb')
 
-logging.basicConfig(
-    level=logging.INFO, 
-    format='%(asctime)s %(levelname)s %(message)s')
+waiter = dynamodb_client.get_waiter('table_exists')
 
-log = logging.getLogger("Rajesh-Ingest-Raw")
+# logging.basicConfig(
+#     level=logging.INFO, 
+#     format='%(asctime)s %(levelname)s %(message)s')
 
-log.setLevel(logging.INFO)
+# log = logging.getLogger("Rajesh-Ingest-Raw")
+
+# log.setLevel(logging.INFO)
+
+def insert_to_audit_table(item):
+    dynamodb = boto3.resource('dynamodb')
+    table_name = 'data_audit_table_tf'
+    table = dynamodb.Table(table_name)
+    table.put_item(Item=item)
+
+log.info("ingestion_raw")
 
 def publish_sns_message(message, subject):
     try:
@@ -41,6 +55,12 @@ def lambda_handler(event, context):
     try:
         data_set = event.get("dataset")
         log.info(f"{data_set} This is my key")
+        output = waiter.wait(TableName = 'data_audit_table_tf')
+        print (f"{output} Table Exists")
+    except Exception as e:
+        log.info("table does not exist")
+        
+    try:
         response = s3_client.get_object(Bucket=code_bucket, Key=f"{data_set}/config/ingest_config.json")
         log.info("This step was successful")
     except Exception as e:
@@ -141,3 +161,17 @@ def lambda_handler(event, context):
     'body': json.dumps(otherkey)
              
         }
+    
+    item = {
+        'PK' : context.aws_request_id,
+        'SK' : unique_id,
+        'Process_name' : 'test',
+        'function_name' : context.function_name,
+        'aqcuisition' : 'test',
+        'file_name' : 'test',
+        'date_time' : 'test',
+        'process_time_taken' : 'test',
+        'status' : 'test', 
+    }
+    
+    insert_to_audit_table(item)
