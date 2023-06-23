@@ -1,16 +1,3 @@
-#resource "aws_s3_bucket" "rajesh-indv-movielens-source-dataset-tf-test" {
-  #bucket = "rajesh-indv-movielens-source-dataset-tf-test"
-  
-  #acl    = "private"
-
-
-#resource "aws_s3_bucket" "rajesh-indv-movielens-raw-dataset-tf-test" {
-  #bucket = "rajesh-indv-movielens-raw-dataset-tf-test"
- 
-  #acl    = "private"
-
-
-
 resource "aws_cloudwatch_event_rule" "lambda_trigger" {
   name        = "nightly_lambda_trigger"
   description = "Trigger Lambda function every night at 8 PM"
@@ -31,7 +18,3 @@ resource "aws_cloudwatch_event_target" "lambda_target" {
   input = "{\"dataset\":\"movielens\"}"
 }
 
-# resource "aws_lambda_invocation" "lambda_invocation" {
-#   function_name = "ingest-movielens-raw"
-#   input         = "{\"dataset\":\"movielens\"}"
-# }
