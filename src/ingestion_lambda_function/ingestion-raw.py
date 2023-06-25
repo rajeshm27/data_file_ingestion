@@ -21,7 +21,7 @@ s3 = boto3.resource('s3')
 s3_client=boto3.client('s3')
 sns_client = boto3.client('sns')
 dynamodb_client = boto3.client('dynamodb')
-
+dynamodb = boto3.resource('dynamodb')
 waiter = dynamodb_client.get_waiter('table_exists')
 
 # logging.basicConfig(
@@ -33,9 +33,8 @@ waiter = dynamodb_client.get_waiter('table_exists')
 # log.setLevel(logging.INFO)
 
 def insert_to_audit_table(item):
-    dynamodb = boto3.resource('dynamodb')
     table_name = 'data_audit_table_tf'
-    table = dynamodb.Table(table_name)
+    table = dynamodb.Table(table_name)     
     table.put_item(Item=item)
 
 log.info("ingestion_raw")
@@ -57,6 +56,7 @@ def lambda_handler(event, context):
         log.info(f"{data_set} This is my key")
         output = waiter.wait(TableName = 'data_audit_table_tf')
         print (f"{output} Table Exists")
+        insert_to_audit_table(context)
     except Exception as e:
         log.info("table does not exist")
         
@@ -78,6 +78,7 @@ def lambda_handler(event, context):
         source_folder = config_json.get('source_folder')
         target_bucket = config_json.get('target_bucket')
         log.info(source_bucket)
+        
     except Exception as e:
         log.exception(f"Error occurred while processing configuration: {e}")
         publish_sns_message("Error occurred while processing configuration", "Error")
@@ -113,6 +114,19 @@ def lambda_handler(event, context):
             file_pattern_list.append(file_pattern)
             file_type = pipeline_obj['raw']['file_type']
             file_type_list.append(file_type)
+            item = {
+                'PK': context.aws_request_id,
+                'SK': 'test',
+                'Process_name': 'test',
+                'function_name': context.function_name,
+                'acquisition': 'test',
+                'file_name': 'test',
+                'date_time': 'test',
+                'process_time_taken': 'test',
+                'status': 'test',
+                }
+            
+            insert_to_audit_table(item)
             
             log.info(f"Data Asset: {data_asset_list}")
             log.info(f"Raw Partition: {raw_partition_list}")
@@ -162,16 +176,3 @@ def lambda_handler(event, context):
              
         }
     
-    item = {
-        'PK' : context.aws_request_id,
-        'SK' : unique_id,
-        'Process_name' : 'test',
-        'function_name' : context.function_name,
-        'aqcuisition' : 'test',
-        'file_name' : 'test',
-        'date_time' : 'test',
-        'process_time_taken' : 'test',
-        'status' : 'test', 
-    }
-    
-    insert_to_audit_table(item)

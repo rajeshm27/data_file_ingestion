@@ -17,19 +17,10 @@ data "aws_iam_policy_document" "dynamodb_policy" {
   statement {
     effect = "Allow"
     actions = [
-        "dynamodb:*"
-    #   "dynamodb:PutItem",
-    #   "dynamodb:GetItem",
-    #   "dynamodb:DeleteItem",
-    #   "dynamodb:UpdateItem",
-    #   "dynamodb:Query",
-    #   "dynamodb:Scan",
+      "dynamodb:*",
     ]
 
-    resources = [
-      "arn:aws:dynamodb:us-east-2:867838412845:table/data_audit_table_tf",
-    #   "arn:aws:dynamodb:us-east-2:867838412845:table/data_audit_table_tf/index/INDEX_NAME",
-    ]
+     resources = ["*"]
   }
 }
 
